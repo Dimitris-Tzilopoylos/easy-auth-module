@@ -1,0 +1,30 @@
+{
+  "name": "easy-auth-module",
+  "version": "1.0.0",
+  "description": "Personal auth api using jwt for express/fastify",
+  "main": "dist/index.js",
+  "types": "dist/",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js"
+    }
+  },
+  "keywords": [],
+  "author": "DimTzilop",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "easy-validation-service": "^1.0.1",
+    "ejs": "^3.1.10",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.13",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.15",
+    "@babel/core": "^7.22.17",
+    "@babel/preset-env": "^7.22.15",
+    "typescript": "^5.2.2"
+  }
+}
