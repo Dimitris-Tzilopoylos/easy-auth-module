@@ -88,10 +88,58 @@ app.get(
 app.listen({ host: "localhost", port: 8000 });
 ```
 
+### Basic Setup with Express
+
+```javascript
+import express from "express";
+import Authenticator from "easy-auth-module";
+import db from "./db";
+import path from "path";
+import bodyParser from "body-parser";
+
+const app = express();
+app.use(bodyParser.json());
+
+const authModule = new Authenticator({
+  prefix: "/api/v1/auth",
+  http: { type: "express", adapter: app },
+  auth: {
+    identityField: "email",
+    credentialsField: "password",
+    findUserByIdentifier: (identifier) => db.findOne({ email: identifier }),
+    createUser: (data) => db.create(data),
+    updateUserPassword: (identifier, password) =>
+      db.update({ set: { password }, where: { email: identifier } }),
+    verifyUser: (identifier) =>
+      db.update({ set: { verified: true }, where: { email: identifier } }),
+    refreshTokenConfig: {
+      secret: "refreshtokensecret",
+      expirationInSeconds: 60 * 60,
+      property: "refreshToken",
+    },
+    accessTokenConfig: {
+      secret: "accesstokensecret",
+      expirationInSeconds: 5 * 60,
+      property: "accessToken",
+    },
+  },
+});
+
+app.get("/protected", authModule.isAuthenticated(), async (req, res) => {
+  return res.json({ message: `Hi ${req.authContext.email}` });
+});
+
+app.listen(8000, () => {
+  console.log("Server is running on port 8000");
+});
+```
+
+The `/protected` route is protected by the `isAuthenticated` middleware provided by `authModule`. If the user is authenticated, it responds with a JSON message containing the user's email. Otherwise, it returns an unauthorized error.
+
 ### Features
 
 - **Flexible Configuration**: Customize authentication settings to fit your application's requirements.
-- **Integration with Fastify**: Seamlessly integrate with Fastify for efficient handling of authentication routes and middleware.
+- **Integration with Fastify**: Seamlessly integrate with Fastify or Express for efficient handling of authentication routes and middleware.
 - **Token Management**: Generate access and refresh tokens with configurable expiration times and properties.
 - **Email Verification**: Enable email verification for new user accounts, with customizable email templates and verification URLs.
 - **Password Reset**: Implement password reset functionality with customizable email templates and reset URLs.
@@ -114,6 +162,14 @@ Sure! Here's the documentation for the endpoints provided by the easy-auth-modul
 ---
 
 ## Authentication Endpoints
+
+### `GET {prefix}`
+
+Get the authenticated user
+
+#### Headers
+
+`Authorization` (string, required): Bearer token containing the access token.
 
 ### `POST {prefix}/register`
 
