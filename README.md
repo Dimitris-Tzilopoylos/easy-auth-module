@@ -161,7 +161,7 @@ The `/protected` route is protected by the `isAuthenticated` middleware provided
 
 ### Custom Email Templates (Recommended)
 
-For the `forgotPassword` and `verification` features, you can customize the email templates (providing their path in the config) to include user data along with a property `forgotPassword` or `verification`, which is an object containing the URL with the token. Ensure that your email template is .ejs.
+For the `forgotPassword` and `verification` features, you can customize the email templates (providing their path in the config).Below you can see example payloads enhanced with `forgotPassword` as well as `verification` properties. Ensure that your email templates are .ejs files.
 
 ```javascript
 // Example of template data for forgotPassword feature:
