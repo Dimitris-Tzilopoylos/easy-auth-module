@@ -134,12 +134,12 @@ app.listen(8000, () => {
 });
 ```
 
-The `/protected` route is protected by the `isAuthenticated` middleware provided by `authModule`. If the user is authenticated, it responds with a JSON message containing the user's email. Otherwise, it returns an unauthorized error.
+The `/protected` route is protected by the `isAuthenticated` middleware provided by `authModule`. If the user is not authenticated, it respondes with an unauthorized error. You can access the authenticated user's data by req.authContext anywhere you use `authModule.isAuthenticated()` middleware.
 
 ### Features
 
 - **Flexible Configuration**: Customize authentication settings to fit your application's requirements.
-- **Integration with Fastify**: Seamlessly integrate with Fastify or Express for efficient handling of authentication routes and middleware.
+- **Integration with Fastify/Express**: Seamlessly integrate with Fastify or Express for efficient handling of authentication routes and middleware.
 - **Token Management**: Generate access and refresh tokens with configurable expiration times and properties.
 - **Email Verification**: Enable email verification for new user accounts, with customizable email templates and verification URLs.
 - **Password Reset**: Implement password reset functionality with customizable email templates and reset URLs.
