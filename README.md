@@ -157,8 +157,6 @@ The `/protected` route is protected by the `isAuthenticated` middleware provided
 - `auth`: Configuration options for authentication behavior.
 - `mailOptions`: Configuration options for email communication, including verification and password reset emails.
 
-Sure! Here's the documentation for the endpoints provided by the easy-auth-module:
-
 ---
 
 ## Authentication Endpoints
