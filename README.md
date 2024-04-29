@@ -159,6 +159,32 @@ The `/protected` route is protected by the `isAuthenticated` middleware provided
 
 ---
 
+### Custom Email Templates (Recommended)
+
+For the `forgotPassword` and `verification` features, you can customize the email templates (providing their path in the config) to include user data along with a property `forgotPassword` or `verification`, which is an object containing the URL with the token. Ensure that your email template is .ejs.
+
+```javascript
+// Example of template data for forgotPassword feature:
+{
+  "email": "user@example.com",
+  "name": "John Doe",
+  "forgotPassword": {
+    "url": "https://www.my-ui-app.com/reset-password?token=resetToken123"
+  }
+}
+
+// Example of template data for verification feature:
+{
+  "email": "user@example.com",
+  "name": "John Doe",
+  "verification": {
+    "url": "https://www.my-ui-app.com/verify-account?token=verificationToken123"
+  }
+}
+```
+
+---
+
 ## Authentication Endpoints
 
 ### `GET {prefix}`
@@ -246,3 +272,7 @@ Resets an authenticated user's password.
 - `oldPassword` (string, required): The user's old password.
 - `password` (string, required): The new password for the user account.
 - `verifyPassword` (string, required): has to match the `password` field.
+
+```
+
+```
