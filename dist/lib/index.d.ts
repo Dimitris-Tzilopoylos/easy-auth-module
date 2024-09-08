@@ -49,14 +49,11 @@ declare class Authenticator {
       };
       identityField?: string;
       credentialsField?: string;
-      findUserById?: (identifier: string) => Promise<any>;
-      findUserByIdentifier: (identifier: string) => Promise<any>;
+      findUserById?: (identifier: any) => Promise<any>;
+      findUserByIdentifier: (identifier: any) => Promise<any>;
       createUser: (data: any) => Promise<any>;
-      updateUserPassword: (
-        identifier: string,
-        password: string
-      ) => Promise<any>;
-      verifyUser: (identifier: string) => Promise<any>;
+      updateUserPassword: (identifier: any, password: any) => Promise<any>;
+      verifyUser: (identifier: any) => Promise<any>;
     };
     mailOptions?: {
       host: string;
