@@ -1,6 +1,6 @@
 {
   "name": "easy-auth-module",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "description": "Personal auth api module using jwt for express/ultimate-express/fastify",
   "main": "dist/index.js",
   "types": "dist/",

@@ -2,5 +2,14 @@
 .gitignore
 node_modules
 tsconfig.json
-./lib/*
+./lib/auth.js
+./lib/controllers.js
+./lib/errors.js
+./lib/events.js
+./lib/http-adapter.js
+./lib/index.js
+./lib/mail.js
+./lib/router.js
+./lib/storage.js
+lib/
 ./index.js
