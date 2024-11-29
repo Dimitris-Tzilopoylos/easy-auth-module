@@ -88,7 +88,7 @@ app.get(
 app.listen({ host: "localhost", port: 8000 });
 ```
 
-### Basic Setup with Express
+### Basic Setup with Express/Ultimate Express
 
 ```javascript
 import express from "express";
