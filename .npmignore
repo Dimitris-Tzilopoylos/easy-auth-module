@@ -1,0 +1,6 @@
+.babelrc
+.gitignore
+node_modules
+tsconfig.json
+./lib/*
+./index.js

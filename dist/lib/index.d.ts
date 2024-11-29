@@ -28,7 +28,7 @@ declare class Authenticator {
     prefix?: string;
     http: {
       adapter: any;
-      type: "express" | "fastify";
+      type: "express" | "fastify" | "ultimate-express";
     };
     auth: {
       refreshTokenConfig?: {

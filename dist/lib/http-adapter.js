@@ -1,14 +1,12 @@
 "use strict";
 
-const {
-  ApiError
-} = require("./errors");
+const { ApiError } = require("./errors");
 class HttpAdapter {
   static adapterType = "fastify";
   static supportedAdapters = {
     fastify: "fastify",
     // koa: "koa",
-    express: "express"
+    express: "express",
   };
   static adapter;
   static get(route, handler) {
@@ -33,6 +31,7 @@ class HttpAdapter {
         adapter.decorateRequest("authContext", null);
         break;
       case HttpAdapter.supportedAdapters.express:
+      case HttpAdapter.supportedAdapters.ultimateExpress:
         //   case HttpAdapter.supportedAdapters.koa:
         break;
       default:
@@ -47,6 +46,7 @@ class HttpAdapter {
         HttpAdapter.adapter[formattedMethod](route, handler);
         break;
       case HttpAdapter.supportedAdapters.express:
+      case HttpAdapter.supportedAdapters.ultimateExpress:
         HttpAdapter.adapter[formattedMethod](route, handler);
         break;
       case HttpAdapter.supportedAdapters.koa:
@@ -56,22 +56,17 @@ class HttpAdapter {
         throw new Error(`Unsupported http adapter ${HttpAdapter.adapterType}`);
     }
   }
-  static makeJsonResponse({
-    res,
-    status,
-    data,
-    error
-  } = {}) {
+  static makeJsonResponse({ res, status, data, error } = {}) {
     if (error) {
       if (error instanceof ApiError) {
         data = {
-          message: error.message
+          message: error.message,
         };
         status = error.status;
       } else {
         status = 500;
         data = {
-          message: error?.message || "Internal Server Error"
+          message: error?.message || "Internal Server Error",
         };
       }
     }
@@ -79,6 +74,7 @@ class HttpAdapter {
       case HttpAdapter.supportedAdapters.fastify:
         return res.code(status || 200).send(data);
       case HttpAdapter.supportedAdapters.express:
+      case HttpAdapter.supportedAdapters.ultimateExpress:
         return res.status(status || 200).json(data);
       //   case HttpAdapter.supportedAdapters.koa:
       //     res.status = status || 200;
@@ -93,6 +89,7 @@ class HttpAdapter {
       case HttpAdapter.supportedAdapters.fastify:
         return req.params;
       case HttpAdapter.supportedAdapters.express:
+      case HttpAdapter.supportedAdapters.ultimateExpress:
         return req.params;
       case HttpAdapter.supportedAdapters.koa:
         return req.request.params;
@@ -105,6 +102,7 @@ class HttpAdapter {
       case HttpAdapter.supportedAdapters.fastify:
         return req.query;
       case HttpAdapter.supportedAdapters.express:
+      case HttpAdapter.supportedAdapters.ultimateExpress:
         return req.query;
       case HttpAdapter.supportedAdapters.koa:
         return req.request.query;
@@ -117,6 +115,7 @@ class HttpAdapter {
       case HttpAdapter.supportedAdapters.fastify:
         return req.body;
       case HttpAdapter.supportedAdapters.express:
+      case HttpAdapter.supportedAdapters.ultimateExpress:
         return req.body;
       case HttpAdapter.supportedAdapters.koa:
         return req.request.body;
@@ -129,6 +128,7 @@ class HttpAdapter {
       case HttpAdapter.supportedAdapters.fastify:
         return req.headers;
       case HttpAdapter.supportedAdapters.express:
+      case HttpAdapter.supportedAdapters.ultimateExpress:
         return req.headers;
       case HttpAdapter.supportedAdapters.koa:
         return req.request.headers;

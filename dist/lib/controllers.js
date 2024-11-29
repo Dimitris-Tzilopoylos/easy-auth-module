@@ -5,7 +5,7 @@ const {
   Unauthorized,
   InternalServer,
   Forbidden,
-  BadRequest
+  BadRequest,
 } = require("./errors");
 const HttpAdapter = require("./http-adapter");
 class Controllers {
@@ -14,12 +14,12 @@ class Controllers {
       const data = await AuthService.login(req.body);
       return HttpAdapter.makeJsonResponse({
         data,
-        res
+        res,
       });
     } catch (error) {
       return HttpAdapter.makeJsonResponse({
         res,
-        error
+        error,
       });
     }
   }
@@ -28,24 +28,25 @@ class Controllers {
       const data = await AuthService.register(req.body);
       return HttpAdapter.makeJsonResponse({
         data,
-        res
+        res,
       });
     } catch (error) {
       return HttpAdapter.makeJsonResponse({
         res,
-        error: new InternalServer()
+        error: new InternalServer(),
       });
     }
   }
   static isAuthenticatedMiddleware() {
     switch (HttpAdapter.adapterType) {
       case HttpAdapter.supportedAdapters.express:
+      case HttpAdapter.supportedAdapters.ultimateExpress:
         return async (req, res, next) => {
           try {
             const user = await AuthService.isAuthenticated(req);
             if (!req.authContext) {
               req.authContext = {
-                user: null
+                user: null,
               };
             }
             req.authContext.user = user;
@@ -53,7 +54,7 @@ class Controllers {
           } catch (error) {
             return HttpAdapter.makeJsonResponse({
               res,
-              error: new Unauthorized()
+              error: new Unauthorized(),
             });
           }
         };
@@ -63,19 +64,21 @@ class Controllers {
             const user = await AuthService.isAuthenticated(req);
             if (!req.authContext) {
               req.authContext = {
-                user: null
+                user: null,
               };
             }
             req.authContext.user = user;
           } catch (error) {
             return HttpAdapter.makeJsonResponse({
               res,
-              error: new Unauthorized()
+              error: new Unauthorized(),
             });
           }
         };
       default:
-        throw new Error("Middleware generator failed due to: Unsupported adapter type");
+        throw new Error(
+          "Middleware generator failed due to: Unsupported adapter type"
+        );
     }
   }
   static async getMeController(req, res) {
@@ -83,12 +86,12 @@ class Controllers {
       const data = await AuthService.isAuthenticated(req);
       return HttpAdapter.makeJsonResponse({
         data: AuthService.toSanitizedUser(data),
-        res
+        res,
       });
     } catch (error) {
       return HttpAdapter.makeJsonResponse({
         res,
-        error: new Forbidden()
+        error: new Forbidden(),
       });
     }
   }
@@ -97,12 +100,12 @@ class Controllers {
       const data = await AuthService.refreshToken(req.body);
       return HttpAdapter.makeJsonResponse({
         data: AuthService.toSanitizedUser(data),
-        res
+        res,
       });
     } catch (error) {
       return HttpAdapter.makeJsonResponse({
         res,
-        error: new BadRequest()
+        error: new BadRequest(),
       });
     }
   }
@@ -111,12 +114,12 @@ class Controllers {
       const data = await AuthService.updatePassword(req);
       return HttpAdapter.makeJsonResponse({
         data,
-        res
+        res,
       });
     } catch (error) {
       return HttpAdapter.makeJsonResponse({
         res,
-        error
+        error,
       });
     }
   }
@@ -126,13 +129,13 @@ class Controllers {
       return HttpAdapter.makeJsonResponse({
         res,
         data: {
-          message: "ok"
-        }
+          message: "ok",
+        },
       });
     } catch (error) {
       return HttpAdapter.makeJsonResponse({
         res,
-        error
+        error,
       });
     }
   }
@@ -142,13 +145,13 @@ class Controllers {
       return HttpAdapter.makeJsonResponse({
         res,
         data: {
-          message: "ok"
-        }
+          message: "ok",
+        },
       });
     } catch (error) {
       return HttpAdapter.makeJsonResponse({
         res,
-        error
+        error,
       });
     }
   }
@@ -158,13 +161,13 @@ class Controllers {
       return HttpAdapter.makeJsonResponse({
         res,
         data: {
-          message: "ok"
-        }
+          message: "ok",
+        },
       });
     } catch (error) {
       return HttpAdapter.makeJsonResponse({
         res,
-        error
+        error,
       });
     }
   }
@@ -174,13 +177,13 @@ class Controllers {
       return HttpAdapter.makeJsonResponse({
         res,
         data: {
-          message: "ok"
-        }
+          message: "ok",
+        },
       });
     } catch (error) {
       return HttpAdapter.makeJsonResponse({
         res,
-        error: new BadRequest()
+        error: new BadRequest(),
       });
     }
   }
